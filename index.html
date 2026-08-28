@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Password Toggle</title>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient( 135deg, #667eea, #764ba2);
+            padding: 20px;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            top: -80px;
+            left: -80px;
+        }
+        
+        body::after {
+            content: "";
+            position: fixed;
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.10);
+            border-radius: 50%;
+            bottom: -70px;
+            right: -60px;
+        }
+        
+        .password-card {
+            width: 100%;
+            max-width: 430px;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 40px 35px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 1;
+            animation: cardAnimation 0.7s ease;
+        }
+        
+        @keyframes cardAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .lock-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: linear-gradient( 135deg, #667eea, #764ba2);
+            font-size: 40px;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.35);
+        }
+        
+        h1 {
+            color: #222;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        label {
+            display: block;
+            text-align: left;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .password-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            border: 2px solid #ddd;
+            background: #f9f9ff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+        
+        .password-container:focus-within {
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.12);
+        }
+        
+        .input-password {
+            flex: 1;
+            width: 100%;
+            border: none;
+            outline: none;
+            padding: 13px 8px;
+            font-size: 16px;
+            background: transparent;
+            color: #333;
+        }
+        
+        .input-password::placeholder {
+            color: #aaa;
+        }
+        
+        .img-toggle {
+            width: 27px;
+            height: 27px;
+            object-fit: contain;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .img-toggle:hover {
+            transform: scale(1.15);
+        }
+        
+        .password-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .continue-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient( 135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .continue-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.35);
+        }
+        
+        .continue-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .bottom-text {
+            margin-top: 25px;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="password-card">
+
+        <div class="lock-icon">
+
+            🔐
+
+        </div>
+
+        <h1>
+
+            Password Toggle
+
+        </h1>
+
+
+        <label for="password">
+
+            Password
+
+        </label>
+
+        <div class="password-container">
+
+
+            <input type="password" class="input-password" id="password" placeholder="Enter your password">
+
+
+            <img src="view.png" class="img-toggle" id="toggle" alt="Show Password" title="Show / Hide Password" onclick="toggle()">
+
+
+        </div>
+
+
+        <!-- Password information -->
+
+        <div class="password-info">
+
+            <span>🔒 Secure Input</span>
+
+            <span>👁 Click to view</span>
+
+        </div>
+
+
+        <button class="continue-btn" onclick="checkPassword()">
+
+            Continue →
+
+        </button>
+
+
+    </div>
+
+
+
+    <script>
+        const passwordElement =
+            document.getElementById("password");
+
+
+        const toggleElement =
+            document.getElementById("toggle");
+
+
+
+        function toggle() {
+
+
+            if (passwordElement.type === "password") {
+                passwordElement.type = "text";
+                toggleElement.src = "hide.png";
+                toggleElement.alt = "Hide Password";
+
+
+            } else {
+
+                passwordElement.type = "password";
+
+                toggleElement.src = "view.png";
+                toggleElement.alt = "Show Password";
+
+            }
+
+        }
+    </script>
+
+
+</body>
+
+</html>
